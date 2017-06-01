@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="multicopter_arm_macro" params="base_frame_name prefix offset_xyz offset_rpy">
+
+  <xacro:property name="PI" value="3.14159265359"/>
+
+  <xacro:property name="length_1" value="0.1"/>
+  <xacro:property name="radius_1" value="0.05"/>
+  <xacro:property name="mass_1" value="0.2"/>
+  <xacro:property name="length_2" value="0.3"/>
+  <xacro:property name="radius_2" value="0.025"/>
+  <xacro:property name="mass_2" value="0.2"/>
+  <xacro:property name="length_3" value="0.2"/>
+  <xacro:property name="radius_3" value="0.025"/>
+  <xacro:property name="mass_3" value="0.2"/>
+  <xacro:property name="length_4" value="0.1"/>
+  <xacro:property name="radius_4" value="0.025"/>
+  <xacro:property name="mass_4" value="0.2"/>
+  <xacro:property name="length_5" value="0.1"/>
+  <xacro:property name="radius_5" value="0.025"/>
+  <xacro:property name="length_5" value="0.1"/>
+  <xacro:property name="mass_5" value="0.2"/>
+  <xacro:property name="radius_6" value="0.025"/>
+  <xacro:property name="length_6" value="0.1"/>
+  <xacro:property name="mass_6" value="0.2"/>
+
+  <link name="${prefix}_arm_link_1">
+    <inertial>
+      <origin xyz="0 0 ${length_1/2}" rpy="0 0 0"/>
+      <mass value="${mass_1}"/>
+      <inertia ixx="${mass_1/4*radius_1*radius_1 + mass_1/12 * length_1 * length_1}"
+               iyy="${mass_1/4*radius_1*radius_1 + mass_1/12 * length_1 * length_1}"       
+               izz="${mass_1/2*radius_1}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_1/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_1}" radius="${radius_1}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_1/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_1}" radius="${radius_1}"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="${prefix}_arm_link_2">
+    <inertial>
+      <origin xyz="0 0 ${length_2/2}" rpy="0 0 0"/>
+      <mass value="${mass_2}"/>
+      <inertia ixx="${mass_2/4*radius_2*radius_2 + mass_2/12 * length_2 * length_2}"
+               iyy="${mass_2/4*radius_2*radius_2 + mass_2/12 * length_2 * length_2}"       
+               izz="${mass_2/2*radius_2}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_2/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_2}" radius="${radius_2}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_2/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_2}" radius="${radius_2}"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="${prefix}_arm_link_3">
+    <inertial>
+      <origin xyz="0 0 ${length_3/2}" rpy="0 0 0"/>
+      <mass value="${mass_3}"/>
+      <inertia ixx="${mass_3/4*radius_3*radius_3 + mass_3/12 * length_3 * length_3}"
+               iyy="${mass_3/4*radius_3*radius_3 + mass_3/12 * length_3 * length_3}"       
+               izz="${mass_3/2*radius_3}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_3/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_3}" radius="${radius_3}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_3/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_3}" radius="${radius_3}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_arm_link_4">
+    <inertial>
+      <origin xyz="0 0 ${length_4/2}" rpy="0 0 0"/>
+      <mass value="${mass_4}"/>
+      <inertia ixx="${mass_4/4*radius_4*radius_4 + mass_4/12 * length_4 * length_4}"
+               iyy="${mass_4/4*radius_4*radius_4 + mass_4/12 * length_4 * length_4}"       
+               izz="${mass_4/2*radius_4}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_4/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_4}" radius="${radius_4}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_4/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_4}" radius="${radius_4}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_arm_link_5">
+    <inertial>
+      <origin xyz="0 0 ${length_5/2}" rpy="0 0 0"/>
+      <mass value="${mass_5}"/>
+      <inertia ixx="${mass_5/4*radius_5*radius_5 + mass_5/12 * length_5 * length_5}"
+               iyy="${mass_5/4*radius_5*radius_5 + mass_5/12 * length_5 * length_5}"       
+               izz="${mass_5/2*radius_5}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_5/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_5}" radius="${radius_5}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_5/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_5}" radius="${radius_5}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="${prefix}_arm_link_6">
+    <inertial>
+      <origin xyz="0 0 ${length_6/2}" rpy="0 0 0"/>
+      <mass value="${mass_6}"/>
+      <inertia ixx="${mass_6/4*radius_6*radius_6 + mass_6/12 * length_6 * length_6}"
+               iyy="${mass_6/4*radius_6*radius_6 + mass_6/12 * length_6 * length_6}"       
+               izz="${mass_6/2*radius_6}" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 ${length_6/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_6}" radius="${radius_6}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${length_6/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="${length_6}" radius="${radius_6}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${prefix}_arm_joint_1" type="revolute">
+    <origin xyz="${offset_xyz}" rpy="${offset_rpy}"/>
+    <axis xyz="0 0 1"/>
+    <parent link="${base_frame_name}"/>
+    <child link="${prefix}_arm_link_1"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="${3/4*PI}" lower="${-3/4*PI}" effort="20" velocity="3"/>
+  </joint>
+
+  <joint name="${prefix}_arm_joint_2" type="revolute">
+    <origin xyz="0 ${-radius_2-radius_1} ${length_1/2}" rpy="0 ${-PI / 2} 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="${prefix}_arm_link_1"/>
+    <child link="${prefix}_arm_link_2"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="${PI}" lower="0" effort="20" velocity="3"/>
+  </joint>
+
+  <joint name="${prefix}_arm_joint_3" type="revolute">
+    <origin xyz="0 ${radius_3+radius_2} ${length_2}" rpy="0 ${PI *7/ 8} 0"/>
+    <axis xyz="0 1 0"/>
+    <parent link="${prefix}_arm_link_2"/>
+    <child link="${prefix}_arm_link_3"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="0" lower="${-PI*7/4}" effort="20" velocity="3"/>
+  </joint>
+
+  <joint name="${prefix}_arm_joint_4" type="revolute">
+    <origin xyz="0 0 ${length_3}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <parent link="${prefix}_arm_link_3"/>
+    <child link="${prefix}_arm_link_4"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="${PI*3/2}" lower="${-PI*3/2}" effort="20" velocity="3"/>
+  </joint>
+
+  <joint name="${prefix}_arm_joint_5" type="revolute">
+    <origin xyz="0 ${length_5/2} ${length_4}" rpy="${PI/2} 0 0"/>
+    <axis xyz="0 0 1"/>
+    <parent link="${prefix}_arm_link_4"/>
+    <child link="${prefix}_arm_link_5"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="${PI/2}" lower="${-PI/2}" effort="20" velocity="3"/>
+  </joint>
+
+  <joint name="${prefix}_arm_joint_6" type="revolute">
+    <origin xyz="0 0 ${length_5/2}" rpy="${-PI/2} 0 0"/>
+    <axis xyz="0 0 1"/>
+    <parent link="${prefix}_arm_link_5"/>
+    <child link="${prefix}_arm_link_6"/>
+    <dynamics damping="0.005" friction="0.01" />
+    <limit upper="${PI*3/2}" lower="${-PI*3/2}" effort="20" velocity="3"/>
+  </joint>
+
+  <transmission name="${prefix}_trans_1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}_trans_2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_2" >
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}_trans_3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_3" >
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}_trans_4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_4">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_4" >
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}_trans_5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_5">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_5" >
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="${prefix}_trans_6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="${prefix}_arm_joint_6">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="${prefix}_arm_motor_6" >
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  </xacro:macro>
+</robot>

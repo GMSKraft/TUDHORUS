@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="multicopter_base_macro" params="base_frame_name rotors_y_offset rotors_z_offset rotors_x_spacing">
+  <!-- xacro:macro name="multicopter_base_macro" params="base_frame_name rotors_y_offset rotors_z_offset rotors_x_spacing mass cog_xyz *inertia" -->
+    <link name = "${base_frame_name}">
+      <inertial>
+        <!-- mass value="${mass}"/ -->
+        <!-- origin xyz="${cog_xyz}" rpy="0 0 0"/-->
+        <!-- xacro:insert_block name="inertia" / -->
+        <mass value="2.375"/>
+        <origin xyz="0 0 -0.00832" rpy="0 0 0"/>
+        <inertia ixx="0.479" iyy="0.026" izz="0.715" ixy="0.0001313" ixz="0.0" iyz="0.0" />
+      </inertial>
+	
+      <visual name="visual">
+	<origin xyz = "0 0 0" rpy ="0 0 1.57"/>
+        <geometry>
+          <mesh filename="package://multicopter_description/meshes/body_lander.dae" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+
+      <collision name="${base_frame_name}_collision">
+        <origin xyz = "0 0 0" rpy ="0 0 0"/>
+        <geometry>
+          <box size="1.2 0.4 0.1"/>
+        </geometry>
+      </collision>
+
+      <!-- landing poles  -->
+      <xacro:macro name="landing_pole_macro" params="suffix length sign_x sign_y">
+        <collision name="${base_frame_name}_pole_${suffix}_collision">
+          <origin xyz = "${sign_x * 0.2} ${sign_y * 0.25} ${-length/2}" rpy ="0 0 0"/>
+          <geometry>
+            <box size="0.05 0.05 ${length}"/>
+          </geometry>
+          <contact_coefficients mu="1.5" />
+        </collision>
+      </xacro:macro>
+
+      <xacro:landing_pole_macro suffix="front_left" length="0.3" sign_x="1" sign_y="1"/>
+      <xacro:landing_pole_macro suffix="front_right" length="0.3" sign_x="1" sign_y="-1"/>
+      <xacro:landing_pole_macro suffix="rear_left" length="0.3" sign_x="-1" sign_y="1"/>
+      <xacro:landing_pole_macro suffix="rear_right" length="0.3" sign_x="-1" sign_y="-1"/>
+    </link>
+
+      <!-- rotors -->
+    <xacro:macro name="rotor_macro" params="suffix radius height x_offset y_offset z_offset">
+      <link name = "${base_frame_name}_rotor_${suffix}_link">
+	<inertial>
+	  <origin xyz = "0 0 0" rpy = "0 0 0" />
+	  <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz = "0" izz="0.001" />
+	  <mass value="0.05" />
+        </inertial>
+        <visual name="${base_frame_name}_rotor_${suffix}_visual">
+          <!--origin xyz = "${x_offset} ${y_offset} ${z_offset}" rpy ="0 0 0"/-->
+          <geometry>
+            <mesh filename="package://multicopter_description/meshes/HORUS_Motorset_MONO.dae" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </visual>
+        <collision name="${base_frame_name}_rotor_${suffix}_collision">
+          <!--origin xyz = "${x_offset} ${y_offset} ${z_offset + height/2}" rpy ="0 0 0"/-->
+          <origin xyz = "0 0 ${height/2}" rpy ="0 0 0"/>
+          <geometry>
+            <cylinder length="${height}" radius="${radius}"/>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="${base_frame_name}_rotor_${suffix}_joint" type="fixed">
+        <axis xyz = "0 1 0" />
+        <origin xyz = "${x_offset} ${y_offset} ${z_offset}" rpy ="0 0 0"/>
+        <parent link="${base_frame_name}" />
+        <child link="${base_frame_name}_rotor_${suffix}_link" />
+      </joint>
+      <gazebo reference = "${base_frame_name}_rotor_${suffix}_joint" >
+        <disableFixedJointLumping>true</disableFixedJointLumping>
+      </gazebo>
+    </xacro:macro>
+
+    <xacro:macro name="rotor_macro_koax" params="suffix radius height x_offset y_offset z_offset">
+      <link name = "${base_frame_name}_rotor_${suffix}_link">
+	<inertial>
+	  <origin xyz = "0 0 0" rpy = "0 0 0" />
+	  <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz = "0" izz="0.001" />
+	  <mass value="0.05" />
+        </inertial>
+        <visual name="${base_frame_name}_rotor_${suffix}_visual">
+          <!-- origin xyz = "${x_offset} ${y_offset} ${z_offset}" rpy ="0 0 0"/-->
+          <geometry>
+            <mesh filename="package://multicopter_description/meshes/HORUS_Motorset_KOAX.dae" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </visual>
+        <collision name="${base_frame_name}_rotor_${suffix}_collision">
+          <!--origin xyz = "${x_offset} ${y_offset} ${z_offset}" rpy ="0 0 0"/-->
+          <geometry>
+            <cylinder length="${height}" radius="${radius}"/>
+          </geometry>
+        </collision>
+      </link>
+      <joint name="${base_frame_name}_rotor_${suffix}_joint" type="fixed">
+        <origin xyz = "${x_offset} ${y_offset} ${z_offset}" rpy ="0 0 0"/>
+        <parent link="${base_frame_name}" />
+        <child link="${base_frame_name}_rotor_${suffix}_link" />
+      </joint>
+      <gazebo reference = "${base_frame_name}_rotor_${suffix}_joint" >
+        <disableFixedJointLumping>true</disableFixedJointLumping>
+      </gazebo>
+    </xacro:macro>
+
+      <xacro:rotor_macro_koax suffix="front_front_left" radius="0.18" height="0.22" x_offset="${rotors_x_spacing+0.215}" y_offset="${rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro suffix="front_mid_left" radius="0.18" height="0.11" x_offset="0.215" y_offset="${rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro suffix="rear_mid_left" radius="0.18" height="0.11" x_offset="-0.215" y_offset="${rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro_koax suffix="rear_rear_left" radius="0.18" height="0.22" x_offset="${-rotors_x_spacing-0.215}" y_offset="${rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+
+      <xacro:rotor_macro_koax suffix="front_front_right" radius="0.18" height="0.22" x_offset="${rotors_x_spacing+0.215}" y_offset="${-rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro suffix="front_mid_right" radius="0.18" height="0.11" x_offset="0.215" y_offset="${-rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro suffix="rear_mid_right" radius="0.18" height="0.11" x_offset="-0.215" y_offset="${-rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+      <xacro:rotor_macro_koax suffix="rear_rear_right" radius="0.18" height="0.22" x_offset="${-rotors_x_spacing-0.215}" y_offset="${-rotors_y_offset}" z_offset="${rotors_z_offset}"/>
+
+ 
+  </xacro:macro>
+</robot>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="multicopter" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- list of properties -->
+  <xacro:property name="PI" value="3.14159265359"/>
+  <xacro:property name="with_arm" value="True"/>
+
+<!-- start macros -->
+  <xacro:include filename="$(find multicopter_description)/urdf/robot_base.urdf.xacro"/>
+  <xacro:include filename="$(find multicopter_description)/urdf/robot_arm.urdf.xacro"/>
+  <!-- xacro:multicopter_base_macro base_frame_name="base_link" rotors_y_offset="0.335" rotors_z_offset="0.0" rotors_x_spacing="0.366" mass="0.352" cog_xyz="0 0 0">
+        <inertia ixx="0.022" iyy="0.022" izz="0.044" ixy="0.000002748" ixz="0.0" iyz="0.0" />
+  </xacro:multicopter_base_macro -->
+  <xacro:multicopter_base_macro base_frame_name="base_link" rotors_y_offset="0.335" rotors_z_offset="0.0" rotors_x_spacing="0.366">
+  </xacro:multicopter_base_macro >
+  <xacro:if value="${with_arm}">
+  <xacro:multicopter_arm_macro base_frame_name="base_link" prefix="multicopter" offset_xyz="0 0 -0.05" offset_rpy="0 ${PI} 0">
+  </xacro:multicopter_arm_macro>
+  </xacro:if>
+
+</robot>

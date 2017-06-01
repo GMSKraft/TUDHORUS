@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="gui" value="true" />
+  </include>
+
+  <param name="robot_description" command="$(find xacro)/xacro $(find multicopter_description)/urdf/robot_gazebo.urdf.xacro" />
+  <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -z 0.3 -model multicopter" respawn="false" output="screen" />
+
+  <include file="$(find robot_control)/launch/robot_control.launch"/>
+
+</launch>
